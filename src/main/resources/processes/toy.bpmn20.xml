@@ -5,18 +5,18 @@
     <userTask id="application" name="提交请假申请" activiti:assignee="${apply}"/>
     <userTask id="examine" name="审核请假申请" activiti:assignee="${approve}"/>
     <userTask id="modify" name="修改请假申请" activiti:assignee="${apply}"/>
-    <endEvent id="sid-d51392bd-31f6-405a-88ab-a806c36c570c"/>
+    <endEvent id="end"/>
     <sequenceFlow id="sid-e6d32532-f1d9-466f-8827-b9c8a49d3cfc" sourceRef="sid-10268166-f4ae-40ab-bb95-324e4a807c2e" targetRef="application"/>
     <sequenceFlow id="sid-7732ea48-2cc2-456e-a667-5de072e3a2ca" sourceRef="application" targetRef="examine"/>
     <sequenceFlow id="sid-faea8a95-a0b2-4139-bb93-bcc5ac7e3166" sourceRef="examine" targetRef="gateway"/>
-    <sequenceFlow id="agree" sourceRef="sid-41b85451-8383-4a70-8602-52ff0dab60ef" targetRef="sid-d51392bd-31f6-405a-88ab-a806c36c570c" name="同意，事件结束">
-      <conditionExpression xsi:type="tFormalExpression">${pass}</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-dd005591-a794-45e1-a0e7-6d07af5303b2" sourceRef="modify" targetRef="examine"/>
-    <sequenceFlow id="sid-90a9f383-7aa7-49ca-811b-80a4554eedb6" sourceRef="sid-41b85451-8383-4a70-8602-52ff0dab60ef" targetRef="modify" name="不同意，打回重写">
-      <conditionExpression xsi:type="tFormalExpression">${pass}</conditionExpression>
+    <sequenceFlow id="sid-90a9f383-7aa7-49ca-811b-80a4554eedb6" sourceRef="gateway" targetRef="modify" name="不同意，打回重写">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!pass}]]></conditionExpression>
     </sequenceFlow>
-    <exclusiveGateway id="sid-41b85451-8383-4a70-8602-52ff0dab60ef"/>
+    <exclusiveGateway id="gateway" name="ExclusiveGateway"/>
+    <sequenceFlow id="sid-9a3a6081-ee34-41b2-bcf5-6714eea597a3" sourceRef="gateway" targetRef="end" name="同意">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pass}]]></conditionExpression>
+    </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_toy">
     <bpmndi:BPMNPlane bpmnElement="toy" id="BPMNPlane_toy">
@@ -32,7 +32,7 @@
       <bpmndi:BPMNShape id="shape-a744f880-b15d-4cb6-8ff3-521b12283ba4" bpmnElement="modify">
         <omgdc:Bounds x="285.00003" y="180.0" width="100.0" height="80.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="shape-01d0e239-6b8c-4372-a528-14755f7c569d" bpmnElement="sid-d51392bd-31f6-405a-88ab-a806c36c570c">
+      <bpmndi:BPMNShape id="shape-01d0e239-6b8c-4372-a528-14755f7c569d" bpmnElement="end">
         <omgdc:Bounds x="550.0" y="70.0" width="30.0" height="30.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-54c43b22-e57a-4914-8023-bfa1ed957de1" bpmnElement="sid-e6d32532-f1d9-466f-8827-b9c8a49d3cfc">
@@ -49,12 +49,6 @@
         <omgdi:waypoint x="415.00003" y="85.0"/>
         <omgdi:waypoint x="435.0" y="85.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="edge-5c8627de-27f0-43db-bdad-87a2e35ffff5" bpmnElement="agree">
-        <omgdi:waypoint x="475.0" y="85.0"/>
-        <omgdi:waypoint x="493.75" y="85.00003"/>
-        <omgdi:waypoint x="512.5" y="85.0"/>
-        <omgdi:waypoint x="550.0" y="85.0"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="edge-bffe7bc2-c5aa-460e-a409-4c7ad8d69f1e" bpmnElement="sid-dd005591-a794-45e1-a0e7-6d07af5303b2">
         <omgdi:waypoint x="335.00003" y="180.0"/>
         <omgdi:waypoint x="335.00006" y="125.0"/>
@@ -67,6 +61,13 @@
       <bpmndi:BPMNShape id="shape-2fc64d64-b856-42b2-8288-6d32a3b63ead" bpmnElement="sid-41b85451-8383-4a70-8602-52ff0dab60ef">
         <omgdc:Bounds x="435.0" y="65.0" width="40.0" height="40.0"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-5c56b2a1-f85c-4a9b-8516-5fe480bcd7a8" bpmnElement="gateway">
+        <omgdc:Bounds x="435.0" y="65.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-1986c3dc-f843-4381-8969-b25b99ed0946" bpmnElement="sid-9a3a6081-ee34-41b2-bcf5-6714eea597a3">
+        <omgdi:waypoint x="475.0" y="85.0"/>
+        <omgdi:waypoint x="550.0" y="85.0"/>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </definitions>

@@ -115,7 +115,7 @@ public class TestController {
 
     @GetMapping("/modify")
     public String modify(String apply,String reason,Integer days) {
-        Task task = taskService.createTaskQuery().taskAssignee(apply).taskId("modify").singleResult();
+        Task task = taskService.createTaskQuery().taskAssignee(apply).taskDefinitionKey("modify").singleResult();
         //得到业务主键
         String businessKey = task.getBusinessKey();
         //更新请假业务
@@ -123,6 +123,7 @@ public class TestController {
         toyBusinessEntity.setReason(reason);
         toyBusinessEntity.setDays(days);
         toyBusinessService.updateById(toyBusinessEntity);
+        taskService.complete(task.getId());
         return apply + "已修改任务并提交给审批人";
     }
 }
