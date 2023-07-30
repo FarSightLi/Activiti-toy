@@ -29,11 +29,6 @@ public class TestController {
     private TaskService taskService;
     @Autowired
     private RepositoryService repositoryService;
-//    private RuntimeServiceImpl runtimeService=new RuntimeServiceImpl();
-//
-//    private TaskServiceImpl taskService = new TaskServiceImpl() ;
-//
-//    private RepositoryServiceImpl repositoryService = new RepositoryServiceImpl() ;
     @Autowired
     private ToyBusinessServiceImp toyBusinessService;
 
@@ -64,7 +59,7 @@ public class TestController {
     }
 
     /**
-     * 启动一个流程，创建一个任务
+     * 启动一个流程，在第一个节点创建一个任务,并将任务流转到下一个节点
      *
      * @param apply
      * @return
@@ -133,7 +128,7 @@ public class TestController {
         Task task = taskService.createTaskQuery().taskAssignee(apply).taskDefinitionKey("modify").singleResult();
         //得到业务主键
         String businessKey = task.getBusinessKey();
-        //更新请假业务(businesskey要取消引号)
+        //更新请假业务
         ToyBusinessEntity toyBusinessEntity = toyBusinessService.getById(businessKey);
         toyBusinessEntity.setReason(reason);
         toyBusinessEntity.setDays(days);
@@ -161,16 +156,5 @@ public class TestController {
             }
         }
         return "OK";
-    }
-
-    @GetMapping
-    public String test2(String assignee) {
-        //查询申请人的任务
-        UserTask task = (UserTask) taskService
-                .createTaskQuery()
-                .taskAssignee(assignee)
-                .singleResult();
-        task.getBusinessCalendarName();
-        return "yes";
     }
 }
