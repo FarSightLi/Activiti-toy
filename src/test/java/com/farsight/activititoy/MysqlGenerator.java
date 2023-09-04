@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.Collections;
 
 public class MysqlGenerator {
-    private static final String TABLE_NAME = "toy_business";
+    private static final String TABLE_NAME = "user_roles,user_account,user_details,roles,role_permissions";
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/activiti_toy?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true";
     private static final String MYSQL_PWD = "123456";
@@ -41,7 +41,7 @@ public class MysqlGenerator {
                         .service("service")
                         .serviceImpl("service.impl")
                         .mapper("dao")
-                        .xml("dao.xml")
+                        .xml("mapper")
                         .controller("controller")
                         .pathInfo(Collections.singletonMap(OutputFile.xml, "D://")))
                 .strategyConfig(builder -> builder
@@ -54,7 +54,6 @@ public class MysqlGenerator {
                         //entity
                         .entityBuilder()
                         .superClass(Model.class)
-
                         .disableSerialVersionUID()
                         .enableChainModel()
                         .enableLombok()
@@ -64,7 +63,7 @@ public class MysqlGenerator {
                         .naming(NamingStrategy.underline_to_camel)
                         .columnNaming(NamingStrategy.underline_to_camel)
                         .idType(IdType.AUTO)
-                        .formatFileName("%sEntity")
+                        .formatFileName("%s")
                         //service
                         .serviceBuilder()
                         .superServiceClass(IService.class)
@@ -78,7 +77,7 @@ public class MysqlGenerator {
                         .enableBaseColumnList()
                         .mapperAnnotation(Mapper.class)
                         .formatMapperFileName("%sDao")
-                        .formatXmlFileName("%xml"))
+                        .formatXmlFileName("%sxml"))
 
                 .templateConfig(builder ->
                         builder.disable(TemplateType.ENTITY)

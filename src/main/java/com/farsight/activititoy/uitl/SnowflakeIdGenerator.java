@@ -35,7 +35,7 @@ public class SnowflakeIdGenerator {
         if (machineId > MAX_MACHINE_ID || machineId < 0) {
             throw new IllegalArgumentException("Machine ID can't be greater than " + MAX_MACHINE_ID + " or less than 0.");
         }
-        this.machineId = machineId;
+        SnowflakeIdGenerator.machineId = machineId;
     }
 
     // 生成唯一ID

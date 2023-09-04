@@ -17,3 +17,6 @@ import java.util.List;
     interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <#else>
 </#if>
+@Mapper
+public interface ${table.mapperName} extends BaseMapper<${entity}> {
+    }

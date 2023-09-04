@@ -7,11 +7,11 @@ spring:
   activiti:
     database-schema-update: true
     db-history-used: true
-    history-level: full
+    history-level: none
     check-process-definitions: false
     deployment-mode: never-fail
 database:
-  showPerformance: true
+  showPerformance: false
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

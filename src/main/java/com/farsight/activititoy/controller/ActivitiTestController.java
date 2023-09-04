@@ -6,12 +6,10 @@ import com.farsight.activititoy.uitl.SnowflakeIdGenerator;
 import org.activiti.bpmn.model.FormProperty;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.*;
-import org.activiti.engine.impl.RepositoryServiceImpl;
-import org.activiti.engine.impl.RuntimeServiceImpl;
-import org.activiti.engine.impl.TaskServiceImpl;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
-public class TestController {
+public class ActivitiTestController {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
@@ -157,4 +155,12 @@ public class TestController {
         }
         return "OK";
     }
+
+    @GetMapping("/secure/resource")
+    @PreAuthorize("hasRole('ROLE_USER')") // 需要具备ROLE_USER角色才能访问
+    public String secureResource() {
+        return "This is a secure resource!";
+    }
+
+
 }
