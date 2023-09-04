@@ -2,7 +2,7 @@
 
 **版本：1.0.1**
 
-**最后更新时间：2023年8月1日** 
+**最后更新时间：2023年8月1日**
 
 **作者：FarSightLi**
 
@@ -11,15 +11,14 @@
 | 1.0.1 | 2023.8.1  | 添加了一些细节讲解 |
 | 1.0.0 | 2023.7.29 | 初步完成该指南     |
 
-
-
 # 前言
 
 欢迎阅读《Activiti7入门指南》！
 
 在学习Activiti框架的过程中，你可能会发现国内一些教程过于肤浅，停留在API的使用和概念的介绍上，对新手不够友好。这不仅耗费时间，也增加了入门的难度。
 
-另外，相较于之前的版本，Activiti7缺乏详细的接口文档，这给对接口功能有疑问的读者带来了困扰。更令人窒息的一点是，Activiti7的formService接口被移除了，而官方也没有提供明确的替代方案。这样的情况在Stack Overflow等社区上也未能找到解决方案。
+另外，相较于之前的版本，Activiti7缺乏详细的接口文档，这给对接口功能有疑问的读者带来了困扰。更令人窒息的一点是，Activiti7的formService接口被移除了，而官方也没有提供明确的替代方案。这样的情况在Stack
+Overflow等社区上也未能找到解决方案。
 
 因此，我决定编写这本《Activiti7入门指南》，旨在为您提供一个快速入门的途径。在本指南中，您将找到更实用、更深入的内容，帮助您快速掌握Activiti7的核心概念和实际应用。通过逐步引导，您将学会如何正确使用Activiti7，避免陷入困境，更好地应用于实际项目中。
 
@@ -36,8 +35,6 @@
 在完成了这两步之后，相信你会对Activiti有更深刻的认识，此时你就可以根据实际业务慢慢探索更多功能（如更多网关、更多Task以及监听器等）
 
 本指南的所有代码都可以在我的GitHub上找到，所有最新的改动都会更新到GitHub（[FarSightLi/activiti-toy: activiti的学习及项目应用 (github.com)](https://github.com/FarSightLi/activiti-toy)）
-
-
 
 # 入门流程
 
@@ -231,8 +228,6 @@ public class SecurityUtil {
 }
 ```
 
-
-
 ## 工作流初步使用
 
 搭好大致框架后，就可以进行Activiti的体验了
@@ -381,10 +376,6 @@ public String development(String fileName, String key) {
 ```
 
 ![image-20230722171159438](/./md-img/image-20230722171159438.png)
-
-
-
-
 
 ### 启动实例（申请人提交申请）
 
@@ -756,11 +747,10 @@ Caused by: java.lang.NullPointerException: null
 
 清空了表act_re_deployment和act_re_procdef中的数据即可正常启动
 
-
-
 ## 网关的问题
 
-如果找错为：org.activiti.engine.ActivitiException: No outgoing sequence flow of the exclusive gateway 'gateway' could be selected for continuing the process
+如果找错为：org.activiti.engine.ActivitiException: No outgoing sequence flow of the exclusive gateway 'gateway' could be
+selected for continuing the process
 
 ![image-20230722195014149](/./md-img/image-20230722195014149.png)
 
@@ -775,8 +765,6 @@ Caused by: java.lang.NullPointerException: null
 ## Activiti7与Activiti6的差异
 
 1.Activiti7移除了FormService，要想获得Form表单的值，要使用taskService.getVariables(task.getId())方法
-
-
 
 2.在BPMN文件中定义Form表单值的时候，如果使用插件，添加Properties的话，则在bpmn文件中为<activiti:formProperty id="Property 1"/>
 

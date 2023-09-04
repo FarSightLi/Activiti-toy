@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/testActiviti")
 public class ActivitiTestController {
     @Autowired
     private RuntimeService runtimeService;

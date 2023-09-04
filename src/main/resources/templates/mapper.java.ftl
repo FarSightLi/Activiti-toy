@@ -19,4 +19,4 @@ import java.util.List;
 </#if>
 @Mapper
 public interface ${table.mapperName} extends BaseMapper<${entity}> {
-    }
+}
