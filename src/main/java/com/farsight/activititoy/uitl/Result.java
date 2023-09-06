@@ -68,11 +68,6 @@ public class Result<T> implements Serializable {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T> Result<T> success(T result, String message) {
-        return new Result(CodeMsg.SUCCESS,message,result);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <T> Result<T> success(T result) {
         return new Result(CodeMsg.SUCCESS,null,result);
     }

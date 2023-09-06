@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.Collections;
 
 public class MysqlGenerator {
-    private static final String TABLE_NAME = "role_permissions";
+    private static final String TABLE_NAME = "permissions";
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/activiti_toy?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true";
     private static final String MYSQL_PWD = "123456";

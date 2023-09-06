@@ -16,3 +16,8 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+jwt:
+  tokenHeader: X-Token #JWT存储的请求头
+  tokenHead: Bearer  #令牌前缀
+  secret: pKRpxJKnd5Aj0FCZ8g9q7nZO+BVx1pceq/kbv+wvHaGmePjA9CWB6GQIZ+84EK7ErKwnlrKNmHV/WTnoQiFXmA== #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间秒(60*60*24)

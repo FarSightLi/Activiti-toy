@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.farsight.activititoy.entity.UserRoles;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 用户角色对应表 Mapper 接口

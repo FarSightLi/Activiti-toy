@@ -1,6 +1,7 @@
 package com.farsight.activititoy.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -12,31 +13,30 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 角色权限表
+ * 权限表
  * </p>
  *
  * @author farsight
- * @since 2023-09-04
+ * @since 2023-09-06
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("role_permissions")
-public class RolePermissions extends Model<RolePermissions> {
+@TableName("permissions")
+public class Permissions extends Model<Permissions> {
 
     private static final long serialVersionUID = 1L;
 
-//    @TableId(type = IdType.INPUT)
-//    private RolePermissionsKey key;
+    @TableId(value = "id", type = IdType.AUTO)
+    private String id;
 
-    private String role;
-
-    private String permission;
+    @TableField("name")
+    private String name;
 
 
     @Override
     public Serializable pkVal() {
-        return this.permission;
+        return this.id;
     }
 
 }

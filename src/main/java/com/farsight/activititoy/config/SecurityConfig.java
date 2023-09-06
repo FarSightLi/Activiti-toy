@@ -5,15 +5,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+    @Autowired
+    private UserDetailsService userDetailsService;
     @Autowired
     private CustomAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -29,7 +30,14 @@ public class SecurityConfig {
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .csrf().disable() // CSRF保护
-                .httpBasic(withDefaults());
+                .formLogin()
+                .loginPage("/virtual-login-page") // 虚拟的登录页面URL
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .permitAll()
+                .logoutSuccessUrl("/virtual-login-page"); // 登出成功后重定向到虚拟的登录页面
         return http.build();
     }
 

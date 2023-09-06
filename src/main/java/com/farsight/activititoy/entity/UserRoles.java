@@ -25,8 +25,8 @@ import java.io.Serializable;
 public class UserRoles extends Model<UserRoles> {
 
     private static final long serialVersionUID = 1L;
-    @TableId(type = IdType.INPUT)
-    private UserRolesKey key;
+//    @TableId(type = IdType.INPUT)
+//    private UserRolesKey key;
     private String userId;
     private String roleId;
 
