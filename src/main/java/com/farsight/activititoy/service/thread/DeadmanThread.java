@@ -23,6 +23,9 @@ public class DeadmanThread implements Runnable {
     private CountDownLatch count;
     private DeadmanDao deadManMapper;
 
+    public DeadmanThread() {
+    }
+
     public DeadmanThread(CountDownLatch count, DeadmanDao deadManMapper, List<Deadman> list,
                          int startPosition, int endPosition) {
         this.startPosition = startPosition;
