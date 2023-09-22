@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.Collections;
 
 public class MysqlGenerator {
-    private static final String TABLE_NAME = "permissions";
+    private static final String TABLE_NAME = "deadman";
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/activiti_toy?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true";
     private static final String MYSQL_PWD = "123456";
@@ -40,9 +40,9 @@ public class MysqlGenerator {
                         .service("service")
                         .serviceImpl("service.impl")
                         .mapper("dao")
-                        .xml("mapper")
+                        .xml("dao.xml")
                         .controller("controller")
-                        .pathInfo(Collections.singletonMap(OutputFile.xml, "D://")))
+                        )
                 .strategyConfig(builder -> builder
                         //table
                         .enableCapitalMode()
@@ -54,7 +54,6 @@ public class MysqlGenerator {
                         .entityBuilder()
                         .superClass(Model.class)
                         .disableSerialVersionUID()
-                        .enableChainModel()
                         .enableLombok()
                         .enableRemoveIsPrefix()
                         .enableTableFieldAnnotation()
@@ -79,7 +78,7 @@ public class MysqlGenerator {
                         .mapperAnnotation(Mapper.class)
                         .formatMapperFileName("%sDao")
                         .enableFileOverride()
-                        .formatXmlFileName("%sxml"))
+                        .formatXmlFileName("%sDao"))
                 .templateConfig(builder ->
                         builder.disable(TemplateType.ENTITY)
                                 .entity("/templates/entity.java")

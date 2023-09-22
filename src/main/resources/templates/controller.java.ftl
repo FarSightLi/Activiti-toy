@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.farsight.quickstudy.util.Result;
+import com.farsight.activititoy.uitl.Result;
 import java.util.Arrays;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
