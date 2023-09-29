@@ -5,7 +5,6 @@ import com.farsight.activititoy.entity.Deadman;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,16 +20,16 @@ public class DeadmanThread implements Runnable {
     private int endPosition;
     private List<Deadman> list = Collections.synchronizedList(new ArrayList<>());
     private CountDownLatch count;
-    private DeadmanDao deadManMapper;
+    private DeadmanDao deadmanDao;
 
     public DeadmanThread() {
     }
 
-    public DeadmanThread(CountDownLatch count, DeadmanDao deadManMapper, List<Deadman> list,
+    public DeadmanThread(CountDownLatch count, DeadmanDao deadmanDao, List<Deadman> list,
                          int startPosition, int endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
-        this.deadManMapper = deadManMapper;
+        this.deadmanDao = deadmanDao;
         this.list = list;
         this.count = count;
     }
@@ -45,9 +44,9 @@ public class DeadmanThread implements Runnable {
                 Deadman deadMan = new Deadman();
                 BeanUtils.copyProperties(deadManExcelData, deadMan);
                 deadManList.add(deadMan);
-                //批量新增
-                deadManMapper.insertBatch(deadManList);
             }
+            //批量新增
+            deadmanDao.insertBatch(deadManList);
         } catch (Exception e) {
             log.error(e.getMessage());
         } finally {

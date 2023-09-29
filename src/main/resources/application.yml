@@ -13,10 +13,11 @@ spring:
 database:
   showPerformance: false
 mybatis-plus:
-  mapper-locations: classpath :com/farsight/dao/xml/*.xml
+  mapper-locations: classpath:com/farsight/activititoy/dao/xml/*.xml
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 jwt:
   tokenHeader: X-Token #JWT存储的请求头
   tokenHead: Bearer  #令牌前缀

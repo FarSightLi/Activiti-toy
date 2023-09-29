@@ -1,5 +1,8 @@
 package com.farsight.activititoy.controller;
 
+import com.farsight.activititoy.dao.DeadmanDao;
+import com.farsight.activititoy.entity.Deadman;
+import com.farsight.activititoy.exception.CodeMsg;
 import com.farsight.activititoy.service.DeadmanService;
 import com.farsight.activititoy.uitl.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -33,6 +37,8 @@ public class TestController {
 
     @Autowired
     DeadmanService deadmanService;
+    @Autowired
+    DeadmanDao deadmanDao;
 
     @PostMapping("/import")
     public Result importFile(@RequestParam("file") MultipartFile file){
@@ -43,5 +49,18 @@ public class TestController {
     public Result importThread(@RequestParam("file") MultipartFile file){
         deadmanService.importFileThread(file);
         return Result.success();
+    }
+    @PostMapping("/testDao")
+    public Result testDao(){
+        ArrayList<Deadman> deadmen = new ArrayList<>();
+        Deadman deadman = new Deadman();
+        deadman.setAge("11");
+        deadman.setIdCard("card");
+        deadmen.add(deadman);
+        if (deadmanDao!= null){
+            return Result.success();
+        }else {
+            return Result.error(CodeMsg.SUCCESS,"deadmamNull");
+        }
     }
 }

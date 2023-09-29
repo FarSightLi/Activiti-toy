@@ -7,6 +7,7 @@ import com.farsight.activititoy.entity.Deadman;
 import com.farsight.activititoy.service.thread.DeadmanThread;
 import com.farsight.activititoy.uitl.SpringJobBeanFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,12 @@ import java.util.concurrent.*;
 @Service
 @Slf4j
 public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
+    private DeadmanDao deadmanDao;
+
+    public DeadmanExcelListener(DeadmanDao deadmanDao) {
+        this.deadmanDao = deadmanDao;
+    }
+
     private List<Deadman> list = Collections.synchronizedList(new ArrayList<>());
 
     private static final int CORE_POOL_SIZE = 5; // 核心线程数
@@ -34,13 +41,13 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
 
     @Override
     public void invoke(Deadman deadManExcelData, AnalysisContext analysisContext) {
-        log.info("接收到:" + deadManExcelData);
         if (deadManExcelData != null) {
             list.add(deadManExcelData);
         }
     }
 
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+        log.info("解析到："+list.size()+"条数据");
         log.info("解析结束,开始插入数据");
         ExecutorService executor = new ThreadPoolExecutor(CORE_POOL_SIZE,
                 MAX_POOL_SIZE,
@@ -76,8 +83,10 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
 
                 endPosition = (i + 1) * singleThreadDealCount;
             }
-            DeadmanDao deadManMapper = SpringJobBeanFactory.getBean(DeadmanDao.class);
-            DeadmanThread thread = new DeadmanThread(count, deadManMapper, list, startPosition, endPosition);
+            if (deadmanDao == null) {
+                throw new RuntimeException("又为null了");
+            }
+            DeadmanThread thread = new DeadmanThread(count, deadmanDao, list, startPosition, endPosition);
             executor.execute(thread);
         }
         try {

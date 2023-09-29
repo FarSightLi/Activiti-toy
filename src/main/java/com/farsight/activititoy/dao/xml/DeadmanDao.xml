@@ -2,55 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.farsight.activititoy.dao.DeadmanDao">
 
-        <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="com.farsight.activititoy.entity.Deadman">
-                    <id column="uid" property="uid"/>
-                    <result column="idCard" property="idCard"/>
-                    <result column="userName" property="userName"/>
-                    <result column="sex" property="sex"/>
-                    <result column="age" property="age"/>
-                    <result column="reason" property="reason"/>
-                    <result column="house" property="house"/>
-        </resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.farsight.activititoy.entity.Deadman">
+        <id column="uid" property="uid"/>
+        <result column="idCard" property="idCard"/>
+        <result column="userName" property="userName"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="reason" property="reason"/>
+        <result column="house" property="house"/>
+    </resultMap>
 
-        <!-- 通用查询结果列 -->
-        <sql id="Base_Column_List">
-            uid, idCard, userName, sex, age, reason, house
-        </sql>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        uid
+        , idCard, userName, sex, age, reason, house
+    </sql>
 
     <select id="selectAllAutoPage" resultMap="BaseResultMap" parameterType="com.farsight.activititoy.entity.Deadman">
         select
         <include refid="Base_Column_List"/>
         from deadman
         <where>
-                <if test="uid != null">and #{uid
-                    }=uid</if>
-                <if test="idCard != null">and #{idCard
-                    }=idCard</if>
-                <if test="userName != null">and #{userName
-                    }=userName</if>
-                <if test="sex != null">and #{sex
-                    }=sex</if>
-                <if test="age != null">and #{age
-                    }=age</if>
-                <if test="reason != null">and #{reason
-                    }=reason</if>
-                <if test="house != null">and #{house
-                    }=house</if>
+            <if test="uid != null">and #{uid
+                    }=uid
+            </if>
+            <if test="idCard != null">and #{idCard
+                    }=idCard
+            </if>
+            <if test="userName != null">and #{userName
+                    }=userName
+            </if>
+            <if test="sex != null">and #{sex
+                    }=sex
+            </if>
+            <if test="age != null">and #{age
+                    }=age
+            </if>
+            <if test="reason != null">and #{reason
+                    }=reason
+            </if>
+            <if test="house != null">and #{house
+                    }=house
+            </if>
         </where>
         <if test="sortField != null and sortOrder != null and sortField != '' and sortOrder != '' ">
             order by ${sortField} ${sortOrder}
         </if>
     </select>
+
     <insert id="insertBatch">
         insert into deadman(uid,idCard,userName,
         sex,age,reason,
-        house,entity_class)
+        house)
         values
         <foreach collection="deadmanCollection" item="item" separator=",">
             (#{item.uid,jdbcType=NUMERIC},#{item.idCard,jdbcType=VARCHAR},#{item.userName,jdbcType=VARCHAR},
             #{item.sex,jdbcType=VARCHAR},#{item.age,jdbcType=VARCHAR},#{item.reason,jdbcType=VARCHAR},
-            #{item.house,jdbcType=VARCHAR},#{item.entityClass})
+            #{item.house,jdbcType=VARCHAR})
         </foreach>
     </insert>
 </mapper>
