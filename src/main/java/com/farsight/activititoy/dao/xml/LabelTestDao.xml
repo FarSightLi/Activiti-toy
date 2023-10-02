@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farsight.activititoy.dao.LabelTestDao">
+
+    <resultMap id="BaseResultMap" type="com.farsight.activititoy.entity.LabelTest">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="table" column="table" jdbcType="SMALLINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,table
+    </sql>
+</mapper>
