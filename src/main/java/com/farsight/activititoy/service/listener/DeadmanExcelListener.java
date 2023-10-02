@@ -61,8 +61,6 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
         int threadSize = (list.size() / singleThreadDealCount) + 1;
         //计算需要导入的数据总数,用于拆分时线程需要处理数据时使用
         int rowSize = list.size() + 1;
-        // 测试开始时间
-        long startTime = System.currentTimeMillis();
         //申明该线程需要处理数据的开始位置
         int startPosition = 0;
         //申明该线程需要处理数据的结束位置
@@ -83,9 +81,6 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
 
                 endPosition = (i + 1) * singleThreadDealCount;
             }
-            if (deadmanDao == null) {
-                throw new RuntimeException("又为null了");
-            }
             DeadmanThread thread = new DeadmanThread(count, deadmanDao, list, startPosition, endPosition);
             executor.execute(thread);
         }
@@ -95,8 +90,5 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
             log.error(e.getMessage());
         }
         executor.shutdown();
-        long endTime = System.currentTimeMillis();
-        log.info("总耗时：" + (endTime - startTime) + "ms");
-
     }
 }

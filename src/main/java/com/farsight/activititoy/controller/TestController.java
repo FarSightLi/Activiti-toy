@@ -1,9 +1,12 @@
 package com.farsight.activititoy.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.farsight.activititoy.dao.DeadmanDao;
+import com.farsight.activititoy.dto.HeadDTO;
 import com.farsight.activititoy.entity.Deadman;
 import com.farsight.activititoy.exception.CodeMsg;
 import com.farsight.activititoy.service.DeadmanService;
+import com.farsight.activititoy.service.listener.HeadExcelListener;
 import com.farsight.activititoy.uitl.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -50,17 +54,11 @@ public class TestController {
         deadmanService.importFileThread(file);
         return Result.success();
     }
-    @PostMapping("/testDao")
-    public Result testDao(){
-        ArrayList<Deadman> deadmen = new ArrayList<>();
-        Deadman deadman = new Deadman();
-        deadman.setAge("11");
-        deadman.setIdCard("card");
-        deadmen.add(deadman);
-        if (deadmanDao!= null){
-            return Result.success();
-        }else {
-            return Result.error(CodeMsg.SUCCESS,"deadmamNull");
-        }
+    @PostMapping("/testHead")
+    public Result testHead(@RequestParam("file") MultipartFile file) throws IOException {
+        // 读取Excel
+        EasyExcel.read(file.getInputStream(), HeadDTO.class,
+                new HeadExcelListener()).sheet().headRowNumber(2).doRead();
+        return Result.success();
     }
 }
