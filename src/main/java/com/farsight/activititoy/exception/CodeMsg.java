@@ -3,6 +3,7 @@ package com.farsight.activititoy.exception;
 public enum CodeMsg {
     //成功
     SUCCESS(0, "操作成功"),
+    DICT_ERROR(1002, "字典错误"),
     TOKEN_ERROR(5000, "Token错误"),
     SYSTEM_ERROR(10001, "系统错误"),
     SERVER_RESOURCES_UNAVAILABLE(10002, "服务端资源不可用"),
@@ -25,10 +26,10 @@ public enum CodeMsg {
     private int code;
     private String codeRemark;
 
-    private CodeMsg() {
+    CodeMsg() {
     }
 
-    private CodeMsg(int code, String codeRemark) {
+    CodeMsg(int code, String codeRemark) {
         this.code = code;
         this.codeRemark = codeRemark;
     }

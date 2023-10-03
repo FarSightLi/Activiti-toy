@@ -1,7 +1,7 @@
 package com.farsight.activititoy.service;
 
-import com.farsight.activititoy.entity.RolePermissions;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.farsight.activititoy.entity.RolePermissions;
 
 /**
  * <p>

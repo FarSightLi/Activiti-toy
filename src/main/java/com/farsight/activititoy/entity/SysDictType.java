@@ -7,29 +7,31 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * @TableName label_test
+ * @TableName sys_dict_type
  */
-@TableName(value = "label_test")
+@TableName(value = "sys_dict_type")
 @Data
-public class LabelTest implements Serializable {
+public class SysDictType implements Serializable {
     /**
-     *
+     * 主键
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     *
+     * 名字
      */
-    @TableField(value = "label")
-    private Integer label;
+    @TableField(value = "name")
+    private String name;
+
+    /**
+     * 类型（英文名）
+     */
+    @TableField(value = "type")
+    private String type;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
-
-    @TableField(exist = false)
-    private List<Integer> labelList;
 }

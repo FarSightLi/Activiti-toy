@@ -1,7 +1,5 @@
 package com.farsight.activititoy.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
@@ -25,7 +23,7 @@ import java.io.Serializable;
 public class UserRoles extends Model<UserRoles> {
 
     private static final long serialVersionUID = 1L;
-//    @TableId(type = IdType.INPUT)
+    //    @TableId(type = IdType.INPUT)
 //    private UserRolesKey key;
     private String userId;
     private String roleId;

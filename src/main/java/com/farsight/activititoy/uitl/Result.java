@@ -30,8 +30,7 @@ public class Result<T> implements Serializable {
     private T result;
 
 
-
-    public Result(Integer code , String codeRemark, String message, T result ) {
+    public Result(Integer code, String codeRemark, String message, T result) {
 
         this.code = code;
         this.codeRemark = codeRemark;
@@ -39,15 +38,15 @@ public class Result<T> implements Serializable {
         this.result = result;
     }
 
-    private Result(CodeMsg codeMsg)  {
-        if(codeMsg != null) {
+    private Result(CodeMsg codeMsg) {
+        if (codeMsg != null) {
             this.code = codeMsg.getCode();
             this.codeRemark = codeMsg.getCodeRemark();
         }
     }
 
-    private Result(CodeMsg codeMsg, String message, T result){
-        if(codeMsg != null){
+    private Result(CodeMsg codeMsg, String message, T result) {
+        if (codeMsg != null) {
             this.code = codeMsg.getCode();
             this.codeRemark = codeMsg.getCodeRemark();
         }
@@ -56,45 +55,45 @@ public class Result<T> implements Serializable {
     }
 
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> Result<T> success(String message, T result) {
-        return new Result(CodeMsg.SUCCESS,message,result);
+        return new Result(CodeMsg.SUCCESS, message, result);
     }
 
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> Result<List<T>> successForPage(List<T> list) {
-        return new Result(CodeMsg.SUCCESS,null,list);
+        return new Result(CodeMsg.SUCCESS, null, list);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> Result<T> success(T result) {
-        return new Result(CodeMsg.SUCCESS,null,result);
+        return new Result(CodeMsg.SUCCESS, null, result);
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     public static Result success() {
         return new Result(CodeMsg.SUCCESS);
     }
 
     @SuppressWarnings("rawtypes")
     public static Result error(BusinessException e) {
-        return error(e.getCodeMsg(),e.getMessage());
+        return error(e.getCodeMsg(), e.getMessage());
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     public static Result error(CodeMsg codeMsg) {
-        return error(codeMsg,codeMsg.getCodeRemark());
+        return error(codeMsg, codeMsg.getCodeRemark());
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static Result error(CodeMsg codeMsg, String message) {
-        return new Result(codeMsg,message,null);
+        return new Result(codeMsg, message, null);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> Result<T> error(CodeMsg codeMsg, T result) {
-        return new Result(codeMsg,null,result);
+        return new Result(codeMsg, null, result);
     }
 
     public Integer getCode() {

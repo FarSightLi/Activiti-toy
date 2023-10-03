@@ -1,6 +1,5 @@
 package com.farsight.activititoy.config;
 
-import com.farsight.activititoy.exception.BusinessException;
 import com.farsight.activititoy.exception.CodeMsg;
 import com.farsight.activititoy.uitl.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +20,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(response.getWriter(), Result.error(CodeMsg.TOKEN_ERROR,"请先登录"));
+            objectMapper.writeValue(response.getWriter(), Result.error(CodeMsg.TOKEN_ERROR, "请先登录"));
         } else {
         }
     }

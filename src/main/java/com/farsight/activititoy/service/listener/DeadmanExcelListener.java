@@ -5,9 +5,7 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.farsight.activititoy.dao.DeadmanDao;
 import com.farsight.activititoy.entity.Deadman;
 import com.farsight.activititoy.service.thread.DeadmanThread;
-import com.farsight.activititoy.uitl.SpringJobBeanFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
         this.deadmanDao = deadmanDao;
     }
 
-    private List<Deadman> list = Collections.synchronizedList(new ArrayList<>());
+    private final List<Deadman> list = Collections.synchronizedList(new ArrayList<>());
 
     private static final int CORE_POOL_SIZE = 5; // 核心线程数
     private static final int MAX_POOL_SIZE = 10;
@@ -47,7 +45,7 @@ public class DeadmanExcelListener extends AnalysisEventListener<Deadman> {
     }
 
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        log.info("解析到："+list.size()+"条数据");
+        log.info("解析到：" + list.size() + "条数据");
         log.info("解析结束,开始插入数据");
         ExecutorService executor = new ThreadPoolExecutor(CORE_POOL_SIZE,
                 MAX_POOL_SIZE,
