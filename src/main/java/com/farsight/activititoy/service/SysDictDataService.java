@@ -13,5 +13,15 @@ import java.util.List;
 public interface SysDictDataService extends IService<SysDictData> {
     void saveDataToRedis(List<SysDictData> data);
 
-    List<SysDictData> getDataFromRedis(String key);
+    /**
+     * 根据字典类型获取一整个类型的字典数据
+     *
+     * @param type
+     * @return
+     */
+    Object getDataFromRedis(String type);
+
+    SysDictData getDataFromRedisByLabel(String type, String label);
+
+    void updateRedisData(SysDictData sysDictData);
 }

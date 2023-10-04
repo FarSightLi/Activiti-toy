@@ -52,6 +52,16 @@ public class SysDictDataController {
     }
 
     /**
+     * 修改字典里的数据
+     */
+    @PutMapping("/update")
+    public Result update(@Validated @RequestBody SysDictData dict) {
+        dictDataService.updateRedisData(dict);
+        dictDataService.updateById(dict);
+        return Result.success();
+    }
+
+    /**
      * 初始化缓存，将数据库中的字典信息放到redis里
      *
      * @return
@@ -63,12 +73,22 @@ public class SysDictDataController {
     }
 
     /**
+     * 从redis里拿到数据某个类型的所有数据
+     *
+     * @return
+     */
+    @GetMapping("/getCacheList")
+    public Result<Object> getCacheList(String key) {
+        return Result.success(dictDataService.getDataFromRedis(key));
+    }
+
+    /**
      * 从redis里拿到数据
      *
      * @return
      */
-    @GetMapping("/cacheList")
-    public Result<List<SysDictData>> cacheList(String key) {
-        return Result.success(dictDataService.getDataFromRedis(key));
+    @GetMapping("/getCacheData")
+    public Result<SysDictData> getCacheData(String key, String label) {
+        return Result.success(dictDataService.getDataFromRedisByLabel(key, label));
     }
 }

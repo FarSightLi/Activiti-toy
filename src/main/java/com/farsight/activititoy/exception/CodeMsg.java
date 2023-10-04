@@ -4,6 +4,7 @@ public enum CodeMsg {
     //成功
     SUCCESS(0, "操作成功"),
     DICT_ERROR(1002, "字典错误"),
+    JACKSON_ERROR(1003, "jackson转换错误，请查看日志"),
     TOKEN_ERROR(5000, "Token错误"),
     SYSTEM_ERROR(10001, "系统错误"),
     SERVER_RESOURCES_UNAVAILABLE(10002, "服务端资源不可用"),

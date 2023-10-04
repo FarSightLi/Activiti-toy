@@ -5,20 +5,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SysDictRedisServiceImpl implements SysDictRedisService {
     private static final String KEY = "toy_dict";
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-
-    // 编写存储数据到Redis的方法
-    public void saveDataToRedis(String hashKey, String value) {
-        redisTemplate.opsForValue().append(KEY + ":" + hashKey, value);
+    /**
+     * 编写存储数据到Redis的方法
+     *
+     * @param key
+     * @param value
+     */
+    @Override
+    public void saveDataToRedis(String hashKey, String key, String value) {
+        redisTemplate.opsForHash().put(KEY + ":" + hashKey, key, value);
     }
 
-    // 编写从Redis中检索数据的方法
-    public Object getDataFromRedis(String hashKey) {
-        return redisTemplate.opsForValue().get(KEY + ":" + hashKey);
+    /**
+     * 获取字典中某个数据
+     *
+     * @param
+     * @return
+     */
+    @Override
+    public Object getDataFromRedisByLabel(String type, String label) {
+        return redisTemplate.opsForHash().get(KEY + ":" + type, label);
+    }
+
+    /**
+     * 获取字典中某个类型下的所有数据
+     *
+     * @param type
+     * @return
+     */
+    @Override
+    public Object getDataFromRedis(String type) {
+        return redisTemplate.opsForHash().entries(KEY + ":" + type);
+    }
+
+    /**
+     * 删除所有字典缓存
+     *
+     * @param keyList
+     */
+    @Override
+    public void deleteAllData(List<String> keyList) {
+        for (String key : keyList) {
+            redisTemplate.delete(KEY + ":" + key);
+        }
+    }
+
+    @Override
+    public void updateData(String key, String value) {
+        key = KEY + ":" + key;
+        // 先删除原有数据
+        redisTemplate.opsForValue().getAndSet(key, value);
     }
 }

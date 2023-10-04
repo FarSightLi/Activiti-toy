@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -26,6 +28,8 @@ public class SysDictData implements Serializable {
      * 关联type表的字段
      */
     @TableField(value = "type")
+    @NotNull(message = "字典类型不能为空")
+    @NotBlank(message = "字典类型不能为空")
     private String type;
 
     /**
