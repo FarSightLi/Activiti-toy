@@ -91,7 +91,7 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
     }
 
     @Override
-    @Transactional(rollbackFor = BusinessException.class)
+    @Transactional(rollbackFor = RuntimeException.class)
     public void updateData(SysDictData sysDictData) {
         updateById(sysDictData);
         // 删除缓存

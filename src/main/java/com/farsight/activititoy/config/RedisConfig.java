@@ -24,6 +24,7 @@ public class RedisConfig {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setEnableTransactionSupport(true);
         template.setConnectionFactory(connectionFactory);
 
         // 使用JSON序列化器
