@@ -1,5 +1,6 @@
 package com.farsight.activititoy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.farsight.activititoy.dao.SysDictDataDao;
 import com.farsight.activititoy.entity.SysDictData;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,25 +70,66 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
 
     @Override
     public SysDictData getDataFromRedisByLabel(String type, String label) {
-        String data = (String) redisService.getDataFromRedisByLabel(type, label);
+        Object redisData = redisService.getDataFromRedisByLabel(type, label);
+        if (redisData == null) {
+            SysDictData databaseData = getOne(new LambdaQueryWrapper<SysDictData>().eq(SysDictData::getType, type).eq(SysDictData::getLabel, label));
+            if (databaseData != null) {
+                this.addDataToRedis(databaseData);
+            }
+            return databaseData;
+        } else {
+            String data = (String) redisData;
+            try {
+                SysDictData sysDictData = objectMapper.readValue(data, SysDictData.class);
+                return sysDictData;
+            } catch (IOException e) {
+                // 处理异常
+                log.error(e.getMessage());
+                throw new BusinessException(CodeMsg.JACKSON_ERROR);
+            }
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = BusinessException.class)
+    public void updateData(SysDictData sysDictData) {
+        updateById(sysDictData);
+        // 删除缓存
+        redisService.deleteData(sysDictData.getType());
+        // 从数据库中获得字典
+        List<SysDictData> list = this.list(new LambdaQueryWrapper<SysDictData>().eq(SysDictData::getType, sysDictData.getType()));
         try {
-            return objectMapper.readValue(data, SysDictData.class);
-        } catch (IOException e) {
-            // 处理异常
-            log.error(e.getMessage());
+            for (SysDictData dictData : list) {
+                String json = objectMapper.writeValueAsString(dictData);
+                redisService.putData(dictData.getType(), dictData.getLabel(), json);
+            }
+        } catch (JsonProcessingException e) {
             throw new BusinessException(CodeMsg.JACKSON_ERROR);
         }
     }
 
     @Override
-    public void updateRedisData(SysDictData sysDictData) {
+    @Transactional
+    public void deleteData(String type, String label) {
+        this.remove(new LambdaQueryWrapper<SysDictData>().eq(SysDictData::getType, type).eq(SysDictData::getLabel, label));
+        redisService.deleteLabel(type, label);
+    }
+
+    @Override
+    @Transactional
+    public void addData(SysDictData sysDictData) {
+        save(sysDictData);
+        addDataToRedis(sysDictData);
+    }
+
+    private void addDataToRedis(SysDictData sysDictData) {
         try {
             String json = objectMapper.writeValueAsString(sysDictData);
-            redisService.updateData(sysDictData.getType(), json);
+            redisService.putData(sysDictData.getType(), sysDictData.getLabel(), json);
         } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
             throw new BusinessException(CodeMsg.JACKSON_ERROR);
         }
-
     }
 }
 

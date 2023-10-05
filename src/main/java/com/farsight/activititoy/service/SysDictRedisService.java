@@ -24,5 +24,9 @@ public interface SysDictRedisService {
 
     void deleteAllData(List<String> keyList);
 
-    void updateData(String key, String value);
+    void putData(String type, String label, String value);
+
+    void deleteData(String type);
+
+    void deleteLabel(String type, String label);
 }

@@ -59,9 +59,17 @@ public class SysDictRedisServiceImpl implements SysDictRedisService {
     }
 
     @Override
-    public void updateData(String key, String value) {
-        key = KEY + ":" + key;
-        // 先删除原有数据
-        redisTemplate.opsForValue().getAndSet(key, value);
+    public void putData(String type, String label, String value) {
+        redisTemplate.opsForHash().put(KEY + ":" + type, label, value);
+    }
+
+    @Override
+    public void deleteData(String type) {
+        redisTemplate.delete(KEY + ":" + type);
+    }
+
+    @Override
+    public void deleteLabel(String type, String label) {
+        redisTemplate.opsForHash().delete(KEY + ":" + type, label);
     }
 }

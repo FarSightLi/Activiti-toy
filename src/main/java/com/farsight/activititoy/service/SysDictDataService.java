@@ -23,5 +23,9 @@ public interface SysDictDataService extends IService<SysDictData> {
 
     SysDictData getDataFromRedisByLabel(String type, String label);
 
-    void updateRedisData(SysDictData sysDictData);
+    void deleteData(String type, String label);
+
+    void addData(SysDictData sysDictData);
+
+    void updateData(SysDictData sysDictData);
 }

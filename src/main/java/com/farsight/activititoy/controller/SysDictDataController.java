@@ -48,7 +48,8 @@ public class SysDictDataController {
      */
     @PostMapping("/add")
     public Result add(@Validated @RequestBody SysDictData dict) {
-        return Result.success(dictDataService.save(dict));
+        dictDataService.addData(dict);
+        return Result.success();
     }
 
     /**
@@ -56,8 +57,7 @@ public class SysDictDataController {
      */
     @PutMapping("/update")
     public Result update(@Validated @RequestBody SysDictData dict) {
-        dictDataService.updateRedisData(dict);
-        dictDataService.updateById(dict);
+        dictDataService.updateData(dict);
         return Result.success();
     }
 
@@ -90,5 +90,11 @@ public class SysDictDataController {
     @GetMapping("/getCacheData")
     public Result<SysDictData> getCacheData(String key, String label) {
         return Result.success(dictDataService.getDataFromRedisByLabel(key, label));
+    }
+
+    @DeleteMapping("/deleteLabel/{type}/{label}")
+    public Result deleteLabel(@PathVariable String type, @PathVariable String label) {
+        dictDataService.deleteData(type, label);
+        return Result.success();
     }
 }
